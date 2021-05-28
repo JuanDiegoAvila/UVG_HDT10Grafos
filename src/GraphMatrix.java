@@ -46,6 +46,7 @@ public class GraphMatrix
     public void floyd(int s, int ll){
         floyd Floyd = new floyd();
         matriz = Floyd.runFloyd(matriz);
+        Floyd.clear();
         ArrayList<Integer> path = Floyd.path(s,ll);
         if(!path.isEmpty()){
             System.out.println("\nPaso por:");

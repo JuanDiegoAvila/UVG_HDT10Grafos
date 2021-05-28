@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class floyd {
     Integer[][] P;
-    ArrayList<Integer> visitados = new ArrayList<>();
+    ArrayList<Integer> visitados;
     public Integer[][] runFloyd(Integer[][] adyacencia)
     {
         P = new Integer[adyacencia.length][adyacencia.length];
@@ -28,6 +28,9 @@ public class floyd {
             }
         }
         return adyacencia;
+    }
+    public void clear(){
+        visitados = new ArrayList<>();
     }
 
     public ArrayList<Integer> path(int q,int r){
