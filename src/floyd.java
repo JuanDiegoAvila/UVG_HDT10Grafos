@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class floyd {
     Integer[][] P;
-    ArrayList<Integer> visitados;
     public Integer[][] runFloyd(Integer[][] adyacencia)
     {
         P = new Integer[adyacencia.length][adyacencia.length];
@@ -23,23 +22,18 @@ public class floyd {
                         adyacencia[i][j] = (a+b);
                         P[i][j] = k;
                     }
-
                 }
             }
         }
         return adyacencia;
     }
-    public void clear(){
-        visitados = new ArrayList<>();
-    }
 
-    public ArrayList<Integer> path(int q,int r){
+    public void path(int q,int r,GraphMatrix grafo){
         if(P[q][r]!=0){
-            path(q,P[q][r]);
-            visitados.add(P[q][r]);
-            path(P[q][r],r);
+            path(q,P[q][r],grafo);
+            System.out.println(" ->"+grafo.getDepartamento(P[q][r]));
+            path(P[q][r],r,grafo);
         }
-        return visitados;
     }
 
 

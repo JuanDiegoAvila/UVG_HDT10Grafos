@@ -22,7 +22,7 @@ public class GraphMatrix
             for (int y = 0; y<size;y++){
                 if(x == y){ matriz[x][y] = 0;
                 }else{
-                    matriz[x][y] = 888;
+                    matriz[x][y] = 8888;
                 }
 
             }
@@ -35,8 +35,8 @@ public class GraphMatrix
         }
     }
 
-    public void addEdge(){
-
+    public void addEdge(int s, int ll, int tiempo){
+        matriz[s][ll] = tiempo;
     }
 
     public void removeEdge(){
@@ -46,20 +46,13 @@ public class GraphMatrix
     public void floyd(int s, int ll){
         floyd Floyd = new floyd();
         matriz = Floyd.runFloyd(matriz);
-        Floyd.clear();
-        ArrayList<Integer> path = Floyd.path(s,ll);
-        if(!path.isEmpty()){
-            System.out.println("\nPaso por:");
-            for(Integer i: path){
-                System.out.println("\t->"+getDepartamento(i));
-            }
-
-            System.out.println("Se tardo : \n\t->"+matriz[s][ll]);
+        System.out.println("\nPaso por: ");
+        Floyd.path(s,ll,this);
+        if(matriz[s][ll]==8888){
+            System.out.println("No existe relacion ! ");
         }else{
-            System.out.println("\nNo existe el recorrido que solicitas !");
+            System.out.println("Se tardo : \n\t->"+matriz[s][ll]);
         }
-
-
 
     }
 
@@ -70,6 +63,21 @@ public class GraphMatrix
             }
         }
         return "";
+    }
+
+    public void centro(){
+        ArrayList<Integer> filas = new ArrayList<>();
+        ArrayList<Integer> maximos = new ArrayList<>();
+        for(int x = 0; x<size;x++){
+            for (int y = 0; y<size;y++){
+                if(matriz[x][y]!=8888){
+                    filas.add(matriz[x][y]);
+                }
+            }
+            maximos.add(Collections.max(filas));
+        }
+        System.out.println("El centro es "+Collections.max(maximos));
+
     }
 
     public int getIndex(String departamento){
