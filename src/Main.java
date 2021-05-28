@@ -7,13 +7,6 @@ public class Main {
 
     public static ArrayList<String> ciudades;
 
-    private void ciudades(){
-        System.out.print("[ ");
-        for(String i : ciudades){
-            System.out.print(i+" ,");
-        }
-        System.out.print(" ]");
-    }
 
     public static void main(String[]args){
 
