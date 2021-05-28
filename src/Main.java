@@ -1,11 +1,20 @@
 import java.awt.*;
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+
+    public static ArrayList<String> ciudades;
+
+    private void ciudades(){
+        System.out.print("[ ");
+        for(String i : ciudades){
+            System.out.print(i+" ,");
+        }
+        System.out.print(" ]");
+    }
+
     public static void main(String[]args){
 
         ArrayList<String[]> datos = new ArrayList<>();
@@ -28,6 +37,7 @@ public class Main {
             System.out.println("\t[ 4 ] Calcular centro del grafo.");
             System.out.println("\t[ 5 ] Salir.");
             GraphMatrix grafo = new GraphMatrix(datos);
+            ciudades = grafo.c();
             GraphMatrix original = grafo;
 
             int opcion = 0;
@@ -48,12 +58,12 @@ public class Main {
 
             switch (opcion){
                 case 1 -> {
-                    grafo = original;
+                    grafo.copiar(original);
                     scan.nextLine();
-                    System.out.print("\nIngrese la ciudad de salida->");
+                    System.out.print("\nIngrese la ciudad de salida "+ciudades+"->");
                     String salida = scan.nextLine();
 
-                    System.out.print("\nIngrese la ciudad de llegada->");
+                    System.out.print("\nIngrese la ciudad de llegada "+ciudades+"->");
                     String llegada = scan.nextLine();
 
                     int  s = grafo.getIndex(salida);
@@ -63,10 +73,10 @@ public class Main {
                 }
                 case 2 -> {
                     scan.nextLine();
-                    System.out.print("\nIngrese la ciudad de salida->");
+                    System.out.print("\nIngrese la ciudad de salida "+ciudades+"->");
                     String salida = scan.nextLine();
 
-                    System.out.print("\nIngrese la ciudad de llegada->");
+                    System.out.print("\nIngrese la ciudad de llegada "+ciudades+"->");
                     String llegada = scan.nextLine();
 
                     int  s = grafo.getIndex(salida);
@@ -77,7 +87,7 @@ public class Main {
                     while(true){
                         try{
                             System.out.print("\t -> ");
-                            opcion = scan.nextInt();
+                            tiempo = scan.nextInt();
                             break;
                         }catch (Exception e){
                             scan.nextLine();
@@ -89,9 +99,20 @@ public class Main {
 
                 }
                 case 3 -> {
+                    scan.nextLine();
+                    System.out.print("\nIngrese la ciudad de salida "+ciudades+"->");
+                    String salida = scan.nextLine();
+
+                    System.out.print("\nIngrese la ciudad de llegada "+ciudades+"->");
+                    String llegada = scan.nextLine();
+
+                    int  s = grafo.getIndex(salida);
+                    int ll = grafo.getIndex(llegada);
+
+                    original.removeEdge(s,ll);
 
                 }
-                case 4 -> { original.centro();}
+                case 4 -> { grafo.centro();}
                 case 5 -> {salir = true;}
             }
         }

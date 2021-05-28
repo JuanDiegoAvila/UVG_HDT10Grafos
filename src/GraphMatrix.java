@@ -5,9 +5,10 @@ public class GraphMatrix
     int size = 0;
     public Integer[][] matriz;
     public HashMap<String,Integer> posiciones = new HashMap<String,Integer>(); //almacena el nombre de la ciudad, y al vertice al que pertenece.
+    ArrayList<String> ciudades;
 
     public GraphMatrix(ArrayList<String[]> datos){
-        ArrayList<String> ciudades = new ArrayList<>();
+        ciudades = new ArrayList<>();
         for(String[] x: datos){
             //se agregan las ciudades.
             if(!ciudades.contains(x[0])){ ciudades.add(x[0]); }
@@ -35,12 +36,25 @@ public class GraphMatrix
         }
     }
 
+    public ArrayList<String> c(){
+        return ciudades;
+    }
+
     public void addEdge(int s, int ll, int tiempo){
         matriz[s][ll] = tiempo;
     }
 
-    public void removeEdge(){
+    public int getEdge(int s, int ll){
+        int valor = matriz[s][ll];
+        return valor;
+    }
 
+    public void removeEdge(int s, int ll){
+        matriz[s][ll] = 8888;
+    }
+    public void floydS(){
+        floyd Floyd = new floyd();
+        matriz = Floyd.runFloyd(matriz);
     }
 
     public void floyd(int s, int ll){
@@ -66,18 +80,39 @@ public class GraphMatrix
     }
 
     public void centro(){
+        floydS();
         ArrayList<Integer> filas = new ArrayList<>();
-        ArrayList<Integer> maximos = new ArrayList<>();
+        HashMap<Integer,Integer> maximos = new HashMap<Integer,Integer>();
+        for(int x = 0; x<size;x++){
+            filas.clear();
+            for (int y = 0; y<size;y++){
+                filas.add(matriz[x][y]);
+            }
+            maximos.put(x,Collections.max(filas));
+        }
+        int pos = Collections.min(maximos.entrySet(), Map.Entry.comparingByValue()).getKey();
+        int centro = Collections.min(maximos.entrySet(), Map.Entry.comparingByValue()).getValue();
+        String departamento = "";
+
         for(int x = 0; x<size;x++){
             for (int y = 0; y<size;y++){
-                if(matriz[x][y]!=8888){
-                    filas.add(matriz[x][y]);
+                if(matriz[pos][y]==centro){
+                    departamento = getDepartamento(pos);
                 }
             }
-            maximos.add(Collections.max(filas));
         }
-        System.out.println("El centro es "+Collections.max(maximos));
 
+        System.out.println("El centro es "+departamento);
+
+    }
+
+    public void copiar(GraphMatrix original){
+        int s = original.size;
+        for(int x = 0; x<s;x++){
+            for(int y = 0; y<s;y++){
+                this.matriz[x][y] = original.matriz[x][y];
+            }
+        }
     }
 
     public int getIndex(String departamento){
